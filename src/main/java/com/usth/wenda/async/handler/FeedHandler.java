@@ -40,7 +40,7 @@ public class FeedHandler implements EventHandler {
     JedisAdapter jedisAdapter;
 
     private String buildFeedData(EventModel model) {
-        Map<String,String> map = new HashMap<String, String>();
+        Map<String,String> map = new HashMap<>();
         User actor = userService.findById(model.getActorId());
         if(actor == null) {
             return null;
@@ -65,7 +65,7 @@ public class FeedHandler implements EventHandler {
     public void doHandler(EventModel model) {
 
         Feed feed = new Feed();
-        feed.setCreateDate(new Date());
+        feed.setCreatedDate(new Date());
         feed.setUserId(model.getActorId());
         feed.setType(model.getType().getValue());
         feed.setData(buildFeedData(model));

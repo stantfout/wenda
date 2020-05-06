@@ -14,7 +14,8 @@ public interface FeedDao {
     String INSERT_FIELDS = " user_id,data,created_date,type ";
     String SELECT_FIELDS = " id, " + INSERT_FIELDS;
 
-    @Insert("insert into" + TABLE_NAME + " (" + INSERT_FIELDS + ") values (#{userId},#{data},#{createdDate},#{type})")
+    @Insert("insert into" + TABLE_NAME + " (" + INSERT_FIELDS + ") values " +
+            "(#{userId},#{data},#{createdDate},#{type})")
     int addFeed(Feed feed);
 
     List<Feed> selectUserFeeds(@Param("maxId") int maxId,

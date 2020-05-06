@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,22 +31,25 @@ public class FeedController {
     JedisAdapter jedisAdapter;
 
     @RequestMapping(value = "/pullfeeds",method = {RequestMethod.GET,RequestMethod.POST})
-    private String getPullFeeds(Model model) {
+    public String getPullFeeds(Model model) {
         int localUserId = hostHolder.getUser() == null ? 0 : hostHolder.getUser().getId();
-        List<Integer> followees = new ArrayList<Integer>();
+        List<Integer> followees = new ArrayList<>();
         if(localUserId != 0) {
             followees = followService.getFollowees(localUserId, EntityType.ENTITY_USER,Integer.MAX_VALUE);
         }
         List<Feed> feeds = feedService.getUserFeeds(Integer.MAX_VALUE,followees,10);
+        for (Feed feed : feeds) {
+            System.out.println(feed.getCreatedDate());
+        }
         model.addAttribute("feeds",feeds);
         return "feeds";
     }
 
     @RequestMapping(value = "/pushfeeds",method = {RequestMethod.GET,RequestMethod.POST})
-    private String getPushFeeds(Model model) {
+    public String getPushFeeds(Model model) {
         int localUserId = hostHolder.getUser() == null ? 0 : hostHolder.getUser().getId();
         List<String> feedIds = jedisAdapter.lrange(RedisKeyUtil.getTimelineKey(localUserId),0,10);
-        List<Feed> feeds = new ArrayList<Feed>();
+        List<Feed> feeds = new ArrayList<>();
         for (String feedId : feedIds) {
             Feed feed = feedService.findById(Integer.parseInt(feedId));
             if(feed != null) {
