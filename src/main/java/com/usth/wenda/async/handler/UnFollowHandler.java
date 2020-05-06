@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class FollowHandler implements EventHandler {
+public class UnFollowHandler implements EventHandler {
 
     @Autowired
     MessageService messageService;
@@ -34,10 +34,10 @@ public class FollowHandler implements EventHandler {
         User user = userService.findById(model.getActorId());
         if (model.getEntityType() == EntityType.ENTITY_QUESTION) {
             message.setContent("用户" + user.getName()
-                    + "关注了你的问题,http://127.0.0.1:8080/question/" + model.getEntityId());
+                    + "取消关注了你的问题,http://127.0.0.1:8080/question/" + model.getEntityId());
         } else if (model.getEntityType() == EntityType.ENTITY_USER) {
             message.setContent("用户" + user.getName()
-                    + "关注了你,http://127.0.0.1:8080/user/" + model.getActorId());
+                    + "取消关注了你,http://127.0.0.1:8080/user/" + model.getActorId());
         }
 
         messageService.addMessage(message);
@@ -45,6 +45,6 @@ public class FollowHandler implements EventHandler {
 
     @Override
     public List<EventType> getSupportEventTypes() {
-        return Arrays.asList(EventType.FOLLOW);
+        return Arrays.asList(EventType.UNFOLLOW);
     }
 }

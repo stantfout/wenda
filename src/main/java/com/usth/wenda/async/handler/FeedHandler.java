@@ -63,9 +63,6 @@ public class FeedHandler implements EventHandler {
 
     @Override
     public void doHandler(EventModel model) {
-        // 为了测试，把model的userId随机一下
-        Random r = new Random();
-        model.setActorId(1+r.nextInt(10));
 
         Feed feed = new Feed();
         feed.setCreateDate(new Date());
@@ -88,6 +85,6 @@ public class FeedHandler implements EventHandler {
 
     @Override
     public List<EventType> getSupportEventTypes() {
-        return Arrays.asList(new EventType[]{EventType.COMMENT,EventType.FOLLOW});
+        return Arrays.asList(EventType.COMMENT,EventType.FOLLOW);
     }
 }

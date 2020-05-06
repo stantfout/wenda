@@ -59,12 +59,12 @@ public class FollowController {
 
     @RequestMapping(value = "/unfollowUser",method = {RequestMethod.POST})
     @ResponseBody
-    public String unfollowUser(@RequestParam("userId") int userId) {
+    public String unFollowUser(@RequestParam("userId") int userId) {
         if(hostHolder.getUser() == null) {
             return WendaUtil.getJSONString(999);
         }
 
-        boolean ret = followService.unfollow(hostHolder.getUser().getId(),EntityType.ENTITY_USER,userId);
+        boolean ret = followService.unFollow(hostHolder.getUser().getId(),EntityType.ENTITY_USER,userId);
         eventProducer.fireEvent(new EventModel(EventType.UNFOLLOW).
                 setActorId(hostHolder.getUser().getId()).
                 setEntityId(userId).
@@ -75,7 +75,7 @@ public class FollowController {
 
     @RequestMapping(value = "/followQuestion",method = {RequestMethod.POST})
     @ResponseBody
-    public String followQuestion(@RequestParam("userId") int questionId) {
+    public String followQuestion(@RequestParam("questionId") int questionId) {
         if (hostHolder.getUser() == null) {
             return WendaUtil.getJSONString(999);
         }
@@ -87,9 +87,11 @@ public class FollowController {
 
         boolean ret = followService.follow(hostHolder.getUser().getId(), EntityType.ENTITY_QUESTION, questionId);
 
-        eventProducer.fireEvent(new EventModel(EventType.FOLLOW)
-                .setActorId(hostHolder.getUser().getId()).setEntityId(questionId)
-                .setEntityType(EntityType.ENTITY_QUESTION).setEntityOwnerId(q.getUserId()));
+        eventProducer.fireEvent(new EventModel(EventType.FOLLOW).
+                setActorId(hostHolder.getUser().getId()).
+                setEntityId(questionId).
+                setEntityType(EntityType.ENTITY_QUESTION).
+                setEntityOwnerId(q.getUserId()));
 
         Map<String, Object> info = new HashMap<>();
         info.put("headUrl", hostHolder.getUser().getHeadUrl());
@@ -101,7 +103,7 @@ public class FollowController {
 
     @RequestMapping(value = "/unfollowQuestion",method = {RequestMethod.POST})
     @ResponseBody
-    public String unfollowQuestion(@RequestParam("userId") int questionId) {
+    public String unfollowQuestion(@RequestParam("questionId") int questionId) {
         if (hostHolder.getUser() == null) {
             return WendaUtil.getJSONString(999);
         }
@@ -111,11 +113,13 @@ public class FollowController {
             return WendaUtil.getJSONString(1, "问题不存在");
         }
 
-        boolean ret = followService.unfollow(hostHolder.getUser().getId(), EntityType.ENTITY_QUESTION, questionId);
+        boolean ret = followService.unFollow(hostHolder.getUser().getId(), EntityType.ENTITY_QUESTION, questionId);
 
-        eventProducer.fireEvent(new EventModel(EventType.UNFOLLOW)
-                .setActorId(hostHolder.getUser().getId()).setEntityId(questionId)
-                .setEntityType(EntityType.ENTITY_QUESTION).setEntityOwnerId(q.getUserId()));
+        eventProducer.fireEvent(new EventModel(EventType.UNFOLLOW).
+                setActorId(hostHolder.getUser().getId()).
+                setEntityId(questionId).
+                setEntityType(EntityType.ENTITY_QUESTION).
+                setEntityOwnerId(q.getUserId()));
 
         Map<String, Object> info = new HashMap<>();
         info.put("id", hostHolder.getUser().getId());
@@ -150,7 +154,7 @@ public class FollowController {
     }
 
     private List<ViewObject> getUsersInfo(int localUserId, List<Integer> userIds) {
-        List<ViewObject> userInfos = new ArrayList<ViewObject>();
+        List<ViewObject> userInfos = new ArrayList<>();
         for (Integer uid : userIds) {
             User user = userService.findById(uid);
             if (user == null) {

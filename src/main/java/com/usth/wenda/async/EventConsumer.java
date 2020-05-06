@@ -44,10 +44,9 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
         }
 
         Thread thread = new Thread(() -> {
+            String key = RedisKeyUtil.getEventQueueKey();
             while(true) {
-                String key = RedisKeyUtil.getEventQueueKey();
                 List<String> events = jedisAdapter.brpop(0, key);
-
                 for (String message : events) {
                     if (message.equals(key)) {
                         continue;
@@ -58,7 +57,6 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
                         logger.error("不能识别的事件");
                         continue;
                     }
-
                     for (EventHandler handler : config.get(eventModel.getType())) {
                         handler.doHandler(eventModel);
                     }

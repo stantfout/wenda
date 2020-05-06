@@ -20,12 +20,12 @@ public class EventModel {
         this.type = type;
     }
 
-    public EventModel setExt(String key, String value) {
+    public EventModel setExts(String key, String value) {
         exts.put(key, value);
         return this;
     }
 
-    public String getExt(String key) {
+    public String getExts(String key) {
         return exts.get(key);
     }
 
@@ -73,5 +73,24 @@ public class EventModel {
     public EventModel setEntityOwnerId(int entityOwnerId) {
         this.entityOwnerId = entityOwnerId;
         return this;
+    }
+
+    public Map<String, String> getExts() {
+        return exts;
+    }
+
+    public void setExts(Map<String, String> exts) {
+        this.exts = exts;
+    }
+    @Override
+    public String toString() {
+        return "EventModel{" +
+                "type=" + type +
+                ", actorId=" + actorId +
+                ", entityType=" + entityType +
+                ", entityId=" + entityId +
+                ", entityOwnerId=" + entityOwnerId +
+                ", exts=" + exts +
+                '}';
     }
 }

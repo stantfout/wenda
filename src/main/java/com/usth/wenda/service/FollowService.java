@@ -25,26 +25,25 @@ public class FollowService {
         Jedis jedis = jedisAdapter.getJedis();
         Transaction tx = jedisAdapter.multi(jedis);
         tx.zadd(followerKey,date.getTime(),String.valueOf(userId));
-        tx.zadd(followeeKey,date.getTime(),String.valueOf(userId));
+        tx.zadd(followeeKey,date.getTime(),String.valueOf(entityId));
         List<Object> ret = jedisAdapter.exec(tx, jedis);
         return ret.size() == 2 && (Long) ret.get(0) > 0 && (Long) ret.get(1) > 0;
     }
 
-    public boolean unfollow(int userId, int entityType, int entityId) {
+    public boolean unFollow(int userId, int entityType, int entityId) {
         String followerKey = RedisKeyUtil.getFollowerKey(entityType, entityId);
         String followeeKey = RedisKeyUtil.getFolloweeKey(entityType, userId);
-        Date date = new Date();
         Jedis jedis = jedisAdapter.getJedis();
         Transaction tx = jedisAdapter.multi(jedis);
         tx.zrem(followerKey,String.valueOf(userId));
-        tx.zrem(followeeKey,String.valueOf(userId));
+        tx.zrem(followeeKey,String.valueOf(entityId));
         List<Object> ret = jedisAdapter.exec(tx, jedis);
         return ret.size() == 2 && (Long) ret.get(0) > 0 && (Long) ret.get(1) > 0;
     }
 
-    private List<Integer> getIdsFromSet(Set<String> idset) {
+    private List<Integer> getIdsFromSet(Set<String> idSet) {
         List<Integer> ids = new ArrayList<>();
-        for (String str : idset) {
+        for (String str : idSet) {
             ids.add(Integer.parseInt(str));
         }
         return ids;
@@ -76,7 +75,7 @@ public class FollowService {
     }
 
     public long getFolloweeCount(int userId, int entityType) {
-        String followeeKey = RedisKeyUtil.getFollowerKey(entityType, userId);
+        String followeeKey = RedisKeyUtil.getFolloweeKey(entityType, userId);
         return jedisAdapter.zcard(followeeKey);
     }
 

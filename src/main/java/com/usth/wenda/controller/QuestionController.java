@@ -80,7 +80,7 @@ public class QuestionController {
         //model.addAttribute("user",userService.findById(question.getUserId()));
         
         List<Comment> commentList = commentService.findCommentByEntity(qid,EntityType.ENTITY_QUESTION);
-        List<ViewObject> comments = new ArrayList<ViewObject>();
+        List<ViewObject> comments = new ArrayList<>();
         for (Comment comment : commentList) {
             ViewObject vo = new ViewObject();
             vo.set("comment",comment);
@@ -95,7 +95,7 @@ public class QuestionController {
         }
         model.addAttribute("comments",comments);
 
-        List<ViewObject> followUsers = new ArrayList<ViewObject>();
+        List<ViewObject> followUsers = new ArrayList<>();
         //获取关注用户信息
         List<Integer> users = followService.getFollowers(EntityType.ENTITY_QUESTION,qid,20);
         for (Integer userId : users) {

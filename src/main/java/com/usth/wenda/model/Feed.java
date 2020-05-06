@@ -9,7 +9,7 @@ public class Feed {
     private int id;
     private int type;
     private int userId;
-    private Date createDate;
+    private Date createdDate;
     //JSON
     private String data;
     private JSONObject dataJSON = null;
@@ -39,11 +39,11 @@ public class Feed {
     }
 
     public Date getCreateDate() {
-        return createDate;
+        return createdDate;
     }
 
     public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+        this.createdDate = createDate;
     }
 
     public String getData() {

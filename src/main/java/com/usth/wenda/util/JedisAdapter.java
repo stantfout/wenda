@@ -149,37 +149,15 @@ public class JedisAdapter implements InitializingBean {
             LOGGER.error("Jedis发生异常" + e.getMessage());
         } finally {
             if(tx != null) {
-                try {
-                    tx.clear();
-                } catch (Exception e) {
-                    LOGGER.error("Jedis发生异常" + e.getMessage());
-                }
+                tx.clear();
             }
             if(jedis != null) {
-                try {
-                    jedis.close();
-                } catch (Exception e) {
-                    LOGGER.error("Jedis发生异常" + e.getMessage());
-                }
+                jedis.close();
             }
         }
         return null;
     }
 
-    public long zadd(String key, double score, String value) {
-        Jedis jedis = null;
-        try {
-            jedis = pool.getResource();
-            return jedis.zadd(key, score, value);
-        } catch (Exception e) {
-            LOGGER.error("发生异常" + e.getMessage());
-        } finally {
-            if (jedis != null) {
-                jedis.close();
-            }
-        }
-        return 0;
-    }
 
     public Set<String> zrevrange(String key, int start, int end) {
         Jedis jedis = null;

@@ -17,8 +17,8 @@ public class LikeService {
 
         String disLikeKey = RedisKeyUtil.getDisLikeKey(entityType,entityId);
         jedisAdapter.srem(disLikeKey,String.valueOf(userId));
-        long count = jedisAdapter.scard(likeKey) - jedisAdapter.scard(disLikeKey);
-        return count;
+
+        return jedisAdapter.scard(likeKey);
     }
 
     public long disLike(int userId, int entityType, int entityId) {
@@ -28,8 +28,8 @@ public class LikeService {
 
         String likeKey = RedisKeyUtil.getLikeKey(entityType,entityId);
         jedisAdapter.srem(likeKey,String.valueOf(userId));
-        long count = jedisAdapter.scard(likeKey) - jedisAdapter.scard(disLikeKey);
-        return count;
+
+        return jedisAdapter.scard(likeKey);
     }
 
     public int getLikeStatus(int userId, int entityType, int entityId) {
@@ -43,9 +43,7 @@ public class LikeService {
 
     public long getLikeCount(int entityType, int entityId) {
         String likeKey = RedisKeyUtil.getLikeKey(entityType,entityId);
-        String disLikeKey = RedisKeyUtil.getDisLikeKey(entityType,entityId);
-        long count = jedisAdapter.scard(likeKey) - jedisAdapter.scard(disLikeKey);
-        return count;
+        return jedisAdapter.scard(likeKey);
     }
 
 }
