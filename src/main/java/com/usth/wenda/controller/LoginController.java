@@ -57,7 +57,7 @@ public class LoginController {
                 response.addCookie(cookie);
                 /*
                 eventProducer.fireEvent(new EventModel(EventType.LOGIN)
-                        .setExts("username", username).setExts("email", "zjuyxy@qq.com")
+                        .setExt("username", username).setExt("email", "zjuyxy@qq.com")
                         .setActorId((int)map.get("userId")));
                 */
                 if(StringUtils.isNotBlank(next)) {
@@ -103,8 +103,8 @@ public class LoginController {
                 response.addCookie(cookie);
                 /*
                 eventProducer.fireEvent(new EventModel(EventType.LOGIN)
-                        .setExts("username",username)
-                        .setExts("email","986093257@qq.com")
+                        .setExt("username",username)
+                        .setExt("email","986093257@qq.com")
                         .setActorId((int)map.get("userId")));
                  */
                 if(StringUtils.isNotBlank(next)) {
