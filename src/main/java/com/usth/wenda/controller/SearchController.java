@@ -40,11 +40,13 @@ public class SearchController {
     public String search(Model model,@RequestParam("q") String keyword,
                          @RequestParam(value = "offset", defaultValue = "0") int offset,
                          @RequestParam(value = "count", defaultValue = "10") int count) {
+        if (keyword.length() == 0) {
+            return "forward:/";
+        }
         try {
             List<Question> questionList = searchService.searchQuestions(keyword,offset,count,"<em>","</em>");
             List<ViewObject> vos = new ArrayList<>();
             for (Question question : questionList) {
-                System.out.println(question);
                 Question q = questionService.findById(question.getId());
                 ViewObject vo = new ViewObject();
                 if (question.getContent() != null) {

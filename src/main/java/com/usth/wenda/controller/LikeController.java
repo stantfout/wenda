@@ -50,6 +50,7 @@ public class LikeController {
                 setEntityType(EntityType.ENTITY_COMMENT).
                 setExt("question", String.valueOf(question.getTitle())).
                 setExt("comment",comment.getContent()).
+                setExt("questionId",String.valueOf(comment.getEntityId())).
                 setEntityOwnerId(comment.getUserId());
         eventProducer.fireEvent(model);
 
