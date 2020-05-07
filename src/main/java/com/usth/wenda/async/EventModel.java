@@ -20,12 +20,12 @@ public class EventModel {
         this.type = type;
     }
 
-    public EventModel setExts(String key, String value) {
+    public EventModel setExt(String key, String value) {
         exts.put(key, value);
         return this;
     }
 
-    public String getExts(String key) {
+    public String getExt(String key) {
         return exts.get(key);
     }
 
@@ -75,11 +75,11 @@ public class EventModel {
         return this;
     }
 
-    public Map<String, String> getExts() {
+    public Map<String, String> getExt() {
         return exts;
     }
 
-    public void setExts(Map<String, String> exts) {
+    public void setExt(Map<String, String> exts) {
         this.exts = exts;
     }
     @Override

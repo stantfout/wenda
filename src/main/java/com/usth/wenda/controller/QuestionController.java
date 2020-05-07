@@ -1,5 +1,8 @@
 package com.usth.wenda.controller;
 
+import com.usth.wenda.async.EventModel;
+import com.usth.wenda.async.EventProducer;
+import com.usth.wenda.async.EventType;
 import com.usth.wenda.model.*;
 import com.usth.wenda.service.*;
 import com.usth.wenda.util.WendaUtil;
@@ -11,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 @Controller
@@ -37,6 +39,9 @@ public class QuestionController {
     @Autowired
     FollowService followService;
 
+    @Autowired
+    EventProducer eventProducer;
+
     /**
      * 增加问题
      * @param title
@@ -59,6 +64,9 @@ public class QuestionController {
                 question.setUserId(hostHolder.getUser().getId());
             }
             if(questionService.addQusetion(question) > 0) {
+                eventProducer.fireEvent(new EventModel(EventType.ADD_QUESTION)
+                        .setActorId(question.getUserId()).setEntityId(question.getId())
+                        .setExt("title", question.getTitle()).setExt("content", question.getContent()));
                 return WendaUtil.getJSONString(0);
             }
         } catch (Exception e) {
