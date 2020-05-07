@@ -22,7 +22,7 @@ public class WendaWebconfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(passportInterceptorl);
-        registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/user/*");
+        registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/user/*").addPathPatterns("/pullfeeds");
         super.addInterceptors(registry);
     }
 

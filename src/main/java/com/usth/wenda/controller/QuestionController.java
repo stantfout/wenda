@@ -66,7 +66,7 @@ public class QuestionController {
             if(questionService.addQusetion(question) > 0) {
                 eventProducer.fireEvent(new EventModel(EventType.ADD_QUESTION)
                         .setActorId(question.getUserId()).setEntityId(question.getId())
-                        .setExt("title", question.getTitle()).setExt("content", question.getContent()));
+                        .setExt("questionTitle", question.getTitle()).setExt("content", question.getContent()));
                 return WendaUtil.getJSONString(0);
             }
         } catch (Exception e) {
@@ -85,7 +85,6 @@ public class QuestionController {
     public String questionDetail(Model model,@PathVariable int qid) {
         Question question = questionService.findById(qid);
         model.addAttribute("question",question);
-        //model.addAttribute("user",userService.findById(question.getUserId()));
         
         List<Comment> commentList = commentService.findCommentByEntity(qid,EntityType.ENTITY_QUESTION);
         List<ViewObject> comments = new ArrayList<>();

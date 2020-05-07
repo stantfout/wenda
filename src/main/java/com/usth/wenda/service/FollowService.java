@@ -60,7 +60,7 @@ public class FollowService {
     }
 
     public List<Integer> getFollowees(int userId, int entityType, int count) {
-        String followeeKey = RedisKeyUtil.getFollowerKey(entityType, userId);
+        String followeeKey = RedisKeyUtil.getFolloweeKey(entityType, userId);
         return getIdsFromSet(jedisAdapter.zrevrange(followeeKey,0,count));
     }
 

@@ -22,7 +22,7 @@
                             <div class="feed-item-inner">
                                 <div class="avatar">
                                     <a title="$!{vo.user.name}" data-tip="p$t$amuro1230" class="zm-item-link-avatar" target="_blank" href="https://nowcoder.com/people/amuro1230">
-                                        <img src="$!{vo.user.headUrl}" class="zm-item-img-avatar"></a>
+                                        <img src="$!{vo.user.headUrl}" class="zm-item-img-avatar" href="/user/$!{vo.user.id}"></a>
                                 </div>
                                 <div class="feed-main">
                                     <div class="feed-content" data-za-module="AnswerItem">
@@ -35,7 +35,7 @@
                                         </div>
                                         <div class="expandable entry-body">
                                             <div class="zm-item-vote">
-                                                <a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-bind-votecount="">${vo.followCount}</a></div>
+                                                <a class="zm-item-vote-count js-expand js-vote-count" href="/question/$!{vo.question.id}" data-bind-votecount="">${vo.followCount}</a></div>
                                             <div class="zm-item-answer-author-info">
                                                 <a class="author-link" data-tip="p$b$amuro1230" target="_blank" href="/user/$!{vo.user.id}">$!{vo.user.name}</a>
                                                 ，$data.format('yyyy-MM-dd HH:mm:ss', $!{vo.question.createdDate})</div>
@@ -51,9 +51,9 @@
                                         <div class="feed-meta">
                                             <div class="zm-item-meta answer-actions clearfix js-contentActions">
                                                 <div class="zm-meta-panel">
-                                                    <a data-follow="q:link" class="follow-link zg-follow meta-item" href="javascript:;" id="sfb-123114">
+                                                    <a data-follow="q:link" class="follow-link zg-follow meta-item" href="/question/$!{vo.question.id}" id="sfb-123114">
                                                         <i class="z-icon-follow"></i>关注问题</a>
-                                                    <a href="#" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
+                                                    <a href="/question/$!{vo.question.id}" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
                                                         <i class="z-icon-comment"></i>${vo.question.commentCount} 条评论</a>
 
 

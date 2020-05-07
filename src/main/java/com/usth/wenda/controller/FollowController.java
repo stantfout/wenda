@@ -91,7 +91,9 @@ public class FollowController {
                 setActorId(hostHolder.getUser().getId()).
                 setEntityId(questionId).
                 setEntityType(EntityType.ENTITY_QUESTION).
-                setEntityOwnerId(q.getUserId()));
+                setEntityOwnerId(q.getUserId()).
+                setExt("questionId", String.valueOf(q.getId())).
+                setExt("question", q.getTitle()));
 
         Map<String, Object> info = new HashMap<>();
         info.put("headUrl", hostHolder.getUser().getHeadUrl());

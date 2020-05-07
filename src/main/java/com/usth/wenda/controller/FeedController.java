@@ -37,11 +37,10 @@ public class FeedController {
         if(localUserId != 0) {
             followees = followService.getFollowees(localUserId, EntityType.ENTITY_USER,Integer.MAX_VALUE);
         }
-        List<Feed> feeds = feedService.getUserFeeds(Integer.MAX_VALUE,followees,10);
-        for (Feed feed : feeds) {
-            System.out.println(feed.getCreatedDate());
+        if (followees.size() != 0) {
+            List<Feed> feeds = feedService.getUserFeeds(Integer.MAX_VALUE,followees,10);
+            model.addAttribute("feeds",feeds);
         }
-        model.addAttribute("feeds",feeds);
         return "feeds";
     }
 

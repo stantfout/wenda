@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class EventModel {
 
-    private EventType type;
-    private int actorId;
-    private int entityType;
-    private int entityId;
-    private int entityOwnerId;
+    private EventType type;//消息类型
+    private int actorId;//消息创建者
+    private int entityType;//对象的类型(问题、评论、用户)
+    private int entityId;//对象ID
+    private int entityOwnerId;//对象创建者ID
     private Map<String, String> exts = new HashMap<>();
 
     public EventModel() {

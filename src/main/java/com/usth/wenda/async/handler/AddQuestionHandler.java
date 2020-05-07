@@ -24,7 +24,7 @@ public class AddQuestionHandler implements EventHandler {
     public void doHandler(EventModel model) {
         try {
             searchService.indexQuestion(model.getEntityId(),
-                    model.getExt("title"), model.getExt("content"));
+                    model.getExt("questionTitle"), model.getExt("content"));
         } catch (Exception e) {
             logger.error("增加题目索引失败");
         }

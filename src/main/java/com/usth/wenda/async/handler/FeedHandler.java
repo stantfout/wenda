@@ -17,6 +17,7 @@ import com.usth.wenda.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.jws.WebParam;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -49,7 +50,7 @@ public class FeedHandler implements EventHandler {
         map.put("userHead",actor.getHeadUrl());
         map.put("userName",actor.getName());
 
-        if(model.getType() == EventType.COMMENT || (model.getType() == EventType.FOLLOW && model.getEntityType() == EntityType.ENTITY_QUESTION)) {
+        if(model.getType() == EventType.COMMENT) {
             Question question = questionService.findById(model.getEntityId());
             if(question == null) {
                 return null;
@@ -57,13 +58,21 @@ public class FeedHandler implements EventHandler {
             map.put("questionId",String.valueOf(question.getId()));
             map.put("questionTitle",question.getTitle());
             return JSONObject.toJSONString(map);
+        } else if (model.getType() == EventType.LIKE ) {
+            map.put("comment",model.getExt("comment"));
+            map.put("questionId",model.getExt("questionId"));
+            map.put("questionTitle",model.getExt("question"));
+            return JSONObject.toJSONString(map);
+        } else if (model.getType() == EventType.ADD_QUESTION || (model.getType() == EventType.FOLLOW && model.getEntityType() == EntityType.ENTITY_QUESTION)) {
+            map.put("questionId",model.getExt("questionId"));
+            map.put("questionTitle",model.getExt("question"));
+            return JSONObject.toJSONString(map);
         }
         return null;
     }
 
     @Override
     public void doHandler(EventModel model) {
-
         Feed feed = new Feed();
         feed.setCreatedDate(new Date());
         feed.setUserId(model.getActorId());
@@ -85,6 +94,6 @@ public class FeedHandler implements EventHandler {
 
     @Override
     public List<EventType> getSupportEventTypes() {
-        return Arrays.asList(EventType.COMMENT,EventType.FOLLOW);
+        return Arrays.asList(EventType.LIKE,EventType.ADD_QUESTION,EventType.COMMENT,EventType.FOLLOW);
     }
 }

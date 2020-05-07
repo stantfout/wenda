@@ -27,7 +27,7 @@
                         -->
                     <div class="zm-item-answer-author-info">
                         <a class="author-link" data-tip="p$b$amuro1230" target="_blank" href="/user/$!{vo.userId}">$!{vo.userName}</a>
-                        评论了该问题,$data.format('yyyy-MM-dd HH:mm:ss', $!{vo.createdDate})</div>
+                        评论了该问题 "${vo.questionTitle}"</div>
                     <!--
                     <div class="zm-item-vote-info" data-votecount="4168" data-za-module="VoteInfo">
                         <span class="voters text">
@@ -36,7 +36,7 @@
                     </div>
                     -->
                     <div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="123114" data-action="/answer/content" data-author-name="李淼" data-entry-url="/question/19857995/answer/13174385">
-                        <div class="zh-summary summary clearfix">${vo.questionTitle}</div>
+                        <div class="zh-summary summary clearfix">$data.format('yyyy-MM-dd HH:mm:ss', $!{vo.createdDate})</div>
                     </div>
                 </div>
                 <!--
@@ -89,7 +89,7 @@
                         -->
                     <div class="zm-item-answer-author-info">
                         <a class="author-link" data-tip="p$b$amuro1230" target="_blank" href="/user/$!{vo.userId}">$!{vo.userName}</a>
-                        关注了该问题, $data.format('yyyy-MM-dd HH:mm:ss', $!{vo.createdDate})</div>
+                        关注了该问题 “"${vo.questionTitle}"</div>
                     <!--
                     <div class="zm-item-vote-info" data-votecount="4168" data-za-module="VoteInfo">
                         <span class="voters text">
@@ -98,7 +98,7 @@
                     </div>
                     -->
                     <div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="123114" data-action="/answer/content" data-author-name="李淼" data-entry-url="/question/19857995/answer/13174385">
-                        <div class="zh-summary summary clearfix">${vo.questionTitle}</div>
+                        <div class="zh-summary summary clearfix">$data.format('yyyy-MM-dd HH:mm:ss', $!{vo.createdDate})</div>
                     </div>
                 </div>
                 <!--
@@ -124,7 +124,59 @@
 </div>
 #end
 
+#macro (like_comment, $vo)
+<div class="feed-item folding feed-item-hook feed-item-2
+                        " feed-item-a="" data-type="a" id="feed-2" data-za-module="FeedItem" data-za-index="">
+    <meta itemprop="ZReactor" data-id="389034" data-meta="{&quot;source_type&quot;: &quot;promotion_answer&quot;, &quot;voteups&quot;: 4168, &quot;comments&quot;: 69, &quot;source&quot;: []}">
+    <div class="feed-item-inner">
+        <div class="avatar">
+            <a title="$!{vo.userName}" data-tip="p$t$amuro1230" class="zm-item-link-avatar" target="_blank" href="/user/${vo.userId}">
+                <img src="$!{vo.userHead}" class="zm-item-img-avatar"></a>
+        </div>
+        <div class="feed-main">
+            <div class="feed-content" data-za-module="AnswerItem">
+                <meta itemprop="answer-id" content="389034">
+                <meta itemprop="answer-url-token" content="13174385">
+                <div class="expandable entry-body">
+                    <div class="zm-item-answer-author-info">
+                        <a class="author-link" data-tip="p$b$amuro1230" target="_blank" href="/user/$!{vo.userId}">$!{vo.userName}</a>
+                        点赞了问题”"${vo.questionTitle}"的回复：${vo.comment}</div>
+                    <div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="123114" data-action="/answer/content" data-author-name="李淼" data-entry-url="/question/19857995/answer/13174385">
+                        <div class="zh-summary summary clearfix">$data.format('yyyy-MM-dd HH:mm:ss', $!{vo.createdDate})</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+#end
 
+#macro (add_question, $vo)
+<div class="feed-item folding feed-item-hook feed-item-2
+                        " feed-item-a="" data-type="a" id="feed-2" data-za-module="FeedItem" data-za-index="">
+    <meta itemprop="ZReactor" data-id="389034" data-meta="{&quot;source_type&quot;: &quot;promotion_answer&quot;, &quot;voteups&quot;: 4168, &quot;comments&quot;: 69, &quot;source&quot;: []}">
+    <div class="feed-item-inner">
+        <div class="avatar">
+            <a title="$!{vo.userName}" data-tip="p$t$amuro1230" class="zm-item-link-avatar" target="_blank" href="/user/${vo.userId}">
+                <img src="$!{vo.userHead}" class="zm-item-img-avatar"></a>
+        </div>
+        <div class="feed-main">
+            <div class="feed-content" data-za-module="AnswerItem">
+                <meta itemprop="answer-id" content="389034">
+                <meta itemprop="answer-url-token" content="13174385">
+                <div class="expandable entry-body">
+                    <div class="zm-item-answer-author-info">
+                        <a class="author-link" data-tip="p$b$amuro1230" target="_blank" href="/user/$!{vo.userId}">$!{vo.userName}</a>
+                        提出了问题“"${vo.questionTitle}"等待你回复</div>
+                    <div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="123114" data-action="/answer/content" data-author-name="李淼" data-entry-url="/question/19857995/answer/13174385">
+                        <div class="zh-summary summary clearfix">$data.format('yyyy-MM-dd HH:mm:ss', $!{vo.createdDate})</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+#end
 
 <link rel="stylesheet" href="../styles/index.css">
 <link rel="stylesheet" href="../styles/detail.css">
@@ -145,8 +197,12 @@
                         #foreach($vo in $feeds)
                             #if($vo.type == 1)
                                 #comment_question($vo)
-                            #elseif($vo.type==4)
+                            #elseif($vo.type == 0)
+                                #like_comment($vo)
+                            #elseif($vo.type == 4)
                                 #follow_question($vo)
+                            #elseif($vo.type == 6)
+                                #add_question($vo)
                             #end
                         #end
                     </div>
