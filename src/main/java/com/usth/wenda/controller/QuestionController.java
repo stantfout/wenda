@@ -66,7 +66,7 @@ public class QuestionController {
             if(questionService.addQusetion(question) > 0) {
                 eventProducer.fireEvent(new EventModel(EventType.ADD_QUESTION)
                         .setActorId(question.getUserId()).setEntityId(question.getId())
-                        .setExt("questionTitle", question.getTitle()).setExt("content", question.getContent()));
+                        .setExt("question", question.getTitle()).setExt("content", question.getContent()));
                 return WendaUtil.getJSONString(0);
             }
         } catch (Exception e) {
@@ -83,9 +83,10 @@ public class QuestionController {
      */
     @RequestMapping("/question/{qid}")
     public String questionDetail(Model model,@PathVariable int qid) {
+        //提问信息
         Question question = questionService.findById(qid);
         model.addAttribute("question",question);
-        
+        //评论列表
         List<Comment> commentList = commentService.findCommentByEntity(qid,EntityType.ENTITY_QUESTION);
         List<ViewObject> comments = new ArrayList<>();
         for (Comment comment : commentList) {
@@ -101,9 +102,8 @@ public class QuestionController {
             comments.add(vo);
         }
         model.addAttribute("comments",comments);
-
-        List<ViewObject> followUsers = new ArrayList<>();
         //获取关注用户信息
+        List<ViewObject> followUsers = new ArrayList<>();
         List<Integer> users = followService.getFollowers(EntityType.ENTITY_QUESTION,qid,20);
         for (Integer userId : users) {
             ViewObject vo = new ViewObject();

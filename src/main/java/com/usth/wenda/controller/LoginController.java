@@ -1,8 +1,6 @@
 package com.usth.wenda.controller;
 
-import com.usth.wenda.async.EventModel;
 import com.usth.wenda.async.EventProducer;
-import com.usth.wenda.async.EventType;
 import com.usth.wenda.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
