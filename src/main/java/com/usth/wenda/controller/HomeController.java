@@ -88,6 +88,7 @@ public class HomeController {
         } else {
             vo.set("followed",false);
         }
+
         model.addAttribute("profileUser",vo);
         return "profile";
     }

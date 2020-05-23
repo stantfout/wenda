@@ -33,6 +33,5 @@ public class AddQuestionHandler implements EventHandler {
     @Override
     public List<EventType> getSupportEventTypes() {
         return Collections.singletonList(EventType.ADD_QUESTION);
-
     }
 }

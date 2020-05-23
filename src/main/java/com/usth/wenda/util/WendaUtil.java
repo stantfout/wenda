@@ -1,7 +1,6 @@
 package com.usth.wenda.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLBoundOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
